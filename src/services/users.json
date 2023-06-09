@@ -1,0 +1,85 @@
+{
+    "users": [
+        {
+            "id": "user1",
+            "type": 1,
+            "name": "User 1",
+            "assignedSites": [
+                "Site1",
+                "Site2"
+            ]
+        },
+        {
+            "id": "user2",
+            "type": 2,
+            "name": "User 2",
+            "assignedSites": ["Site3"]
+        },
+        {
+            "id": "user3",
+            "type": 3,
+            "name": "User 3",
+            "assignedSites": []
+        }
+    ],
+    "sites": [
+        {
+            "id": "site1",
+            "name": "Site 1"
+        },
+        {
+            "id": "site2",
+            "name": "Site 2"
+        }
+    ],
+    "orders": [
+        {
+            "id": "order1",
+            "siteId": "site1",
+            "items": [
+                {
+                    "itemId": "item1",
+                    "quantity": 5
+                },
+                {
+                    "itemId": "item2",
+                    "quantity": 10
+                }
+            ],
+            "status": "pending",
+            "submittedBy": "user1",
+            "submittedAt": "2023-06-07T10:00:00Z",
+            "approvedBy": "",
+            "approvedAt": ""
+        },
+        {
+            "id": "order2",
+            "siteId": "site2",
+            "items": [
+                {
+                    "itemId": "item3",
+                    "quantity": 3
+                }
+            ],
+            "status": "approved",
+            "submittedBy": "user1",
+            "submittedAt": "2023-06-06T14:30:00Z",
+            "approvedBy": "user2",
+            "approvedAt": "2023-06-06T15:00:00Z"
+        }
+    ],
+    "items": [
+        {
+            "id": "item1",
+            "name": "Item 1"
+        },
+        {
+            "id": "item2",
+            "name": "Item 2"
+        },
+        {
+            "id": "item3",
+            "name": "Item 3"
+        }
+    ]
+}
