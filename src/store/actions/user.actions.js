@@ -4,8 +4,7 @@ import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.j
 export const REMOVE_USER = 'REMOVE_USER'
 export const ADD_USER = 'ADD_USER'
 export const UPDATE_USER = 'UPDATE_USER'
-export const SET_USERS = 'SET_USERS'
-export const SET_LOADING = 'SET_LOADING'
+
 
 export const removeUser = (userId) => {
   return async (dispatch) => {
@@ -49,16 +48,3 @@ export const updateUser = (user) => {
   }
 }
 
-export const setUsers = (users) => {
-  return {
-    type: SET_USERS,
-    users,
-  }
-}
-
-export const setLoading = (isLoading) => {
-  return {
-    type: SET_LOADING,
-    isLoading,
-  }
-}

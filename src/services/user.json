@@ -1,0 +1,15 @@
+{
+    "users": [
+        {
+            "userId": "user1",
+            "type": 1,
+            "userName": "User 1",
+            "pass": "123",
+            "isAuthenticated": false,
+            "assignedSites": [
+                "Site1",
+                "Site2"
+            ]
+        }
+    ]
+}

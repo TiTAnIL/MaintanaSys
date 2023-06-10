@@ -4,7 +4,7 @@ import { store } from '../store/index'
 import { getActionAddProduct, getActionRemoveProduct, getActionUpdateProduct } from "../store/actions/product.actions.js";
 
 
-const STORAGE_KEY = 'fetchedProducts'
+const STORAGE_KEY = 'products'
 const productChannel = new BroadcastChannel('productChannel')
 
   ; (() => {
@@ -25,43 +25,32 @@ export const productService = {
   getById,
   save,
   remove,
-  getEmptyProduct,
+  getEmptyProduct
 }
 
 window.cs = productService
 
 async function query(filterBy) {
-  var fetchedProducts = await storageService.query(STORAGE_KEY)
+  var fetchedProducts = await storageService.query(STORAGE_KEY);
   if (!fetchedProducts || !fetchedProducts.length) {
     insertDemoData()
   }
   if (filterBy) {
-    const {name,  priceRange, watering, lightning, difficulty, locations } = filterBy
+    const { name, supplier } = filterBy;
     if (name) {
       const regex = new RegExp(name, 'i')
-      fetchedProducts = fetchedProducts.filter((product) => regex.test(product.name))
+      fetchedProducts = fetchedProducts.filter((product) =>
+        regex.test(product.product_name)
+      )
     }
-    
-    if (priceRange) {
-      fetchedProducts = fetchedProducts.filter((product) => product.price >= priceRange.min && product.price <= priceRange.max)
-    }
-    if (watering) {
-      fetchedProducts = fetchedProducts.filter((product) => product.watering === watering)
-    }
-    if (lightning) {
-      fetchedProducts = fetchedProducts.filter((product) => product.lightning === lightning)
-    }
-    if (difficulty) {
-      fetchedProducts = fetchedProducts.filter((product) => product.difficulty === difficulty)
-    }
-    if (locations) {
-      const selectedLocations = Object.keys(locations).filter(location => locations[location])
-      if (selectedLocations.length > 0) {
-        fetchedProducts = fetchedProducts.filter((product) => selectedLocations.includes(product.location))
-      }
+    if (supplier) {
+      const regex = new RegExp(supplier, 'i')
+      fetchedProducts = fetchedProducts.filter((product) =>
+        regex.test(product.supplier)
+      )
     }
   }
-  return fetchedProducts
+  return fetchedProducts;
 }
 
 
@@ -71,8 +60,6 @@ async function save(product) {
     savedProduct = await storageService.put(STORAGE_KEY, product)
     productChannel.postMessage(getActionUpdateProduct(savedProduct))
   } else {
-    // TODO: owner is set by the beckend
-    // product.owner = userService.getLoggedinUser()
     product._id = utilService.makeId()
     savedProduct = await storageService.post(STORAGE_KEY, product)
     productChannel.postMessage(getActionAddProduct(savedProduct))
@@ -91,7 +78,7 @@ async function remove(productId) {
 
 function getEmptyProduct() {
   return {
-    "roduct_name": "",
+    "product_name": "",
     "price": 0,
     "supplier": ""
   }

@@ -1,24 +1,32 @@
 {
     "users": [
         {
-            "id": "user1",
+            "userId": "user1",
             "type": 1,
-            "name": "User 1",
+            "userName": "User 1",
+            "pass": "123",
+            "isAuthenticated": false,
             "assignedSites": [
                 "Site1",
                 "Site2"
             ]
         },
         {
-            "id": "user2",
+            "userId": "user2",
             "type": 2,
-            "name": "User 2",
-            "assignedSites": ["Site3"]
+            "userName": "User 2",
+            "pass": "123",
+            "isAuthenticated": false,
+            "assignedSites": [
+                "Site3"
+            ]
         },
         {
-            "id": "user3",
+            "userId": "user3",
             "type": 3,
-            "name": "User 3",
+            "userName": "User 3",
+            "pass": "123",
+            "isAuthenticated": false,
             "assignedSites": []
         }
     ],

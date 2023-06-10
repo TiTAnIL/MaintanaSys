@@ -1,27 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../store/actions/auth.actions';
 
 export function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const isAuthenticated = useSelector((state) => state.userModule.isAuthenticated)
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+    setUsername(event.target.value)
+  }
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+    setPassword(event.target.value)
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Username:', username);
-    console.log('Password:', password);
     if (password !== '' && username !== '') {
-      navigate('/shop');
+      const credentials = {
+        username: username,
+        password: password
+      }
+      dispatch(login(credentials))
     }
   };
+  
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/shop')
+    }
+  }, [isAuthenticated, navigate])
 
   return (
     <div className="login-window">
