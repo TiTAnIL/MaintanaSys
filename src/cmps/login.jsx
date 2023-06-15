@@ -8,7 +8,15 @@ export function Login() {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const isAuthenticated = useSelector((state) => state.userModule.isAuthenticated)
+  const isAuthenticated = useSelector((state) => state.authModule.isAuthenticated)
+  const { isLoading } = useSelector(state => state.usersModule)
+  
+    useEffect(() => {
+      if (isAuthenticated) {
+        navigate('/shop')
+      }
+    }, [isAuthenticated, navigate])
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value)
@@ -21,6 +29,7 @@ export function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (password !== '' && username !== '') {
+      
       const credentials = {
         username: username,
         password: password
@@ -28,14 +37,9 @@ export function Login() {
       dispatch(login(credentials))
     }
   };
+
+// if (isLoading) return <h1>isLoading</h1>
   
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/shop')
-    }
-  }, [isAuthenticated, navigate])
-
   return (
     <div className="login-window">
       <h2>Login</h2>

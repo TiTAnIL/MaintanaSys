@@ -4,7 +4,19 @@ import { showSuccessMsg, showErrorMsg } from '../../services/event-bus.service.j
 export const REMOVE_USER = 'REMOVE_USER'
 export const ADD_USER = 'ADD_USER'
 export const UPDATE_USER = 'UPDATE_USER'
+export const SET_USER = 'SET_USER'
+export const SET_LOADING = 'SET_LOADING'
 
+export const loadUser = (credentials) => {
+  console.log('actions')
+    return async (dispatch, getState) => {
+      console.log('actions', credentials)
+      const user = await userService.query(credentials)
+      console.log('user', user)
+      dispatch({ type: SET_USER, user })     
+      dispatch({ type: SET_LOADING, isLoading: false })
+  }
+}
 
 export const removeUser = (userId) => {
   return async (dispatch) => {

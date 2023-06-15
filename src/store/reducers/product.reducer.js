@@ -24,13 +24,13 @@ export function productReducer(state = INITIAL_STATE, action) {
         case 'REMOVE_PRODUCT':
             return {
                 ...state,
-                products: state.products.filter(product => product._id !== action.productId)
+                products: state.products.filter(product => product.id !== action.productId)
             }
 
         case 'UPDATE_PRODUCT':
             return {
                 ...state,
-                products: state.products.map(product => product._id === action.product._id ? action.product : product)
+                products: state.products.map(product => product.id === action.product.id ? action.product : product)
             }
 
         case 'SET_FILTER_BY':

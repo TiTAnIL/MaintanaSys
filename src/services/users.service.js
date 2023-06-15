@@ -1,6 +1,7 @@
 import { storageService } from "./async-storage.service.js";
 import { store } from '../store/index';
 import { updateUser } from "../store/actions/user.actions.js";
+import { utilService } from "./util.service.js";
 
 const STORAGE_KEY = 'users';
 const userChannel = new BroadcastChannel('userChannel');
@@ -11,21 +12,26 @@ const userChannel = new BroadcastChannel('userChannel');
   });
 })();
 
-async function insertDemoData() {
-  const response = await fetch('./users.json');
-  const data = await response.json();
-  const demoData = data.fatchedUsers;
-  storageService.postMany(STORAGE_KEY, demoData);
-}
 
-export const userService = {
+export const usersService = {
   query,
   getById,
   save,
   remove
 };
 
-window.cs = userService;
+async function insertDemoData() {
+  try {
+    console.log('inserting demo data');
+    const jsonData = require('./users.json');
+    const demoData = jsonData.users;
+    storageService.postMany(STORAGE_KEY, demoData);
+  } catch (error) {
+    console.error('Failed to insert demo data:', error);
+  }
+}
+
+window.cs = usersService;
 
 async function query() {
   var fetchedUsers = await storageService.query(STORAGE_KEY);
@@ -37,13 +43,13 @@ async function query() {
 
 async function save(user) {
     var savedUser
-    if (user._id) {
+    if (user.id) {
       savedUser = await storageService.put(STORAGE_KEY, user)
       userChannel.postMessage(updateUser(savedUser))
     } else {
-      user._id = utilService.makeId()
+      user.id = utilService.makeId()
       savedUser = await storageService.post(STORAGE_KEY, user)
-      userChannel.postMessage(addUser(savedUser))
+    //   userChannel.postMessage(addUser(savedUser))
     }
     return savedUser
   }
@@ -54,5 +60,5 @@ function getById(userId) {
 
 async function remove(userId) {
   await storageService.remove(STORAGE_KEY, userId);
-  userChannel.postMessage(removeUser());
+//   userChannel.postMessage(removeUser());
 }

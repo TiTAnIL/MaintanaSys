@@ -3,7 +3,7 @@
         {
             "userId": "user1",
             "type": 1,
-            "userName": "User 1",
+            "userName": "User1",
             "pass": "123",
             "isAuthenticated": false,
             "assignedSites": [

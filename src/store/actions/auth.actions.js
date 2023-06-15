@@ -8,7 +8,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 export const SET_LOADING = 'SET_LOADING';
 
-export const loginRequest = () => {
+export const  loginRequest = () => {
   return {
     type: LOGIN_REQUEST
   };
@@ -41,18 +41,15 @@ export const setLoading = (isLoading) => {
 };
 
 export const login = (credentials) => {
-    console.log(credentials)
+  console.log('aut login')
   return async (dispatch) => {
-    console.log(dispatch)
     dispatch(loginRequest());
     try {
       // Call your authentication service or API to perform login
       await authService.login(credentials)
-      console.log('sdfsd')
-      dispatch(loginSuccess());
-      showSuccessMsg('Logged in successfully!');
+      // dispatch(loginSuccess());
+      // showSuccessMsg('Logged in successfully!');
     } catch (error) {
-        console.log('error')
       dispatch(loginFailure(error.message));
       showErrorMsg('Failed to log in');
       console.log('Failed to log in', error);

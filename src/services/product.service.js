@@ -13,12 +13,6 @@ const productChannel = new BroadcastChannel('productChannel')
     })
   })()
 
-async function insertDemoData() {
-  const response = await fetch('./products.json')
-  const data = await response.json()
-  const demoData = data.fetchedProducts
-  storageService.postMany(STORAGE_KEY, demoData)
-}
 
 export const productService = {
   query,
@@ -29,6 +23,13 @@ export const productService = {
 }
 
 window.cs = productService
+
+async function insertDemoData() {
+  const response = await fetch('./products.json')
+  const data = await response.json()
+  const demoData = data.fetchedProducts
+  storageService.postMany(STORAGE_KEY, demoData)
+}
 
 async function query(filterBy) {
   var fetchedProducts = await storageService.query(STORAGE_KEY);
@@ -56,11 +57,11 @@ async function query(filterBy) {
 
 async function save(product) {
   var savedProduct
-  if (product._id) {
+  if (product.id) {
     savedProduct = await storageService.put(STORAGE_KEY, product)
     productChannel.postMessage(getActionUpdateProduct(savedProduct))
   } else {
-    product._id = utilService.makeId()
+    product.id = utilService.makeId()
     savedProduct = await storageService.post(STORAGE_KEY, product)
     productChannel.postMessage(getActionAddProduct(savedProduct))
   }
