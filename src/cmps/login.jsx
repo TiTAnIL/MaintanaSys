@@ -1,56 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../store/actions/auth.actions';
+import { usersService } from '../services/users.service';
 
 export function Login() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const isAuthenticated = useSelector((state) => state.authModule.isAuthenticated)
-  const { isLoading } = useSelector(state => state.usersModule)
-  
-    useEffect(() => {
-      if (isAuthenticated) {
-        navigate('/shop')
-      }
-    }, [isAuthenticated, navigate])
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null); 
+  const userAuth = useSelector((state) => state.authModule);
 
+  useEffect(() => {
+    if (userAuth.id) {
+      navigate(`/sitemanagment/${userAuth.id}`);
+    }
+  }, [navigate, userAuth]);
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value)
-  }
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-  }
+    setPassword(event.target.value);
+  };
+
+  const loadUser = useCallback((id) => {
+    usersService.getById(id).then((user) => {
+      setUser(user);
+    });
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (password !== '' && username !== '') {
-      
+    if (password !== '' && email !== '') {
       const credentials = {
-        username: username,
-        password: password
-      }
+        email: email,
+        password: password,
+      };
       dispatch(login(credentials))
+        .then((user) => {
+          loadUser(user);
+        })
+        .catch((error) => {
+          console.log('Login failed:', error);
+        });
     }
   };
 
-// if (isLoading) return <h1>isLoading</h1>
-  
   return (
     <div className="login-window">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={handleUsernameChange}
+            id="email"
+            value={email}
+            onChange={handleEmailChange}
           />
         </div>
         <div className="form-group">

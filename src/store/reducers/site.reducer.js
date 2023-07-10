@@ -1,44 +1,45 @@
 
 const INITIAL_STATE = {
-    products: [],
+    sites: [],
     filterBy: {},
     isLoading: true
 }
 
 
-export function productReducer(state = INITIAL_STATE, action) {
+export function siteReducer(state = INITIAL_STATE, action) {
 
     switch (action.type) {
-        case 'SET_PRODUCTS':
+        case 'SET_SITES':
             return {
                 ...state,
-                products: action.products
+                sites: action.sites
             }
 
-        case 'ADD_PRODUCT':
+        case 'ADD_SITE':
             return {
                 ...state,
-                products: [...state.products, action.product]
+                sites: [...state.sites, action.site]
             }
 
-        case 'REMOVE_PRODUCT':
+        case 'REMOVE_SITE':
             return {
                 ...state,
-                products: state.products.filter(product => product.id !== action.productId)
+                sites: state.sites.filter(site => site.id !== action.siteId)
             }
 
-        case 'UPDATE_PRODUCT':
+        case 'UPDATE_SITE':
             return {
                 ...state,
-                products: state.products.map(product => product.id === action.product.id ? action.product : product)
+                sites: state.sites.map(site => site.id === action.site.id ? action.site : site)
             }
-
+            
         case 'SET_FILTER_BY':
             return {
                 ...state,
                 filterBy: { ...action.filterBy }
             }
-        case 'SET_PRODUCT_LOADING':
+            
+        case 'SET_SITE_LOADING':
             return {
                 ...state,
                 isLoading: action.isLoading

@@ -1,0 +1,34 @@
+{
+  "products": [
+    {
+      "id": "o1",
+      "agent_id": "fa1",
+      "items": [
+        {
+          "product_id": "p1",
+          "quantity": 5
+        },
+        {
+          "product_id": "p2",
+          "quantity": 10
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "o2",
+      "agent_id": "fa2",
+      "items": [
+        {
+          "product_id": "p3",
+          "quantity": 3
+        },
+        {
+          "product_id": "p1",
+          "quantity": 8
+        }
+      ],
+      "status": "approved"
+    }
+  ]
+}

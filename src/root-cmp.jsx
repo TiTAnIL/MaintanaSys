@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="main-app">
       <AppHeader />
-      <main className='container'>
+      {/* <main className='container'> */}
         <Routes>
           {routes.map((route) => (
             <Route
@@ -19,7 +19,7 @@ function App() {
             />
           ))}
         </Routes>
-      </main>
+      {/* </main> */}
     </div>
   )
 }

@@ -1,6 +1,8 @@
 const initialState = {
     isAuthenticated: false,
     isLoading: false,
+    token: null,
+    id: null,
     error: null
   };
   
@@ -19,10 +21,13 @@ const initialState = {
           error: null
         };
       case LOGIN_SUCCESS:
+        console.log(state, action)
         return {
           ...state,
           isAuthenticated: true,
           isLoading: false,
+          token: action.token,
+          id: action.id,
           error: null
         };
       case LOGIN_FAILURE:
@@ -35,10 +40,18 @@ const initialState = {
       case LOGOUT:
         return {
           ...state,
+          token: null,
+          id: null,
           isAuthenticated: false,
           isLoading: false,
           error: null
         };
+      case 'SET_AUTH_LOADING':
+        return {
+          ...state,
+          isLoading: action.isLoading
+        };
+  
       default:
         return state;
     }
@@ -58,12 +71,6 @@ const initialState = {
   //       return {
   //         ...state,
   //         loggedInUser: null
-  //       };
-  
-  //     case 'SET_LOADING':
-  //       return {
-  //         ...state,
-  //         isLoading: action.isLoading
   //       };
   
       // Other existing cases for managing plants can remain as they are

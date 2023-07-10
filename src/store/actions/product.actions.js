@@ -27,10 +27,12 @@ export function getActionUpdateProduct(product) {
 
 export function loadProducts() {
   return async (dispatch, getState) => {
+    console.log(dispatch)
     const { filterBy } = getState().productModule
     const products = await productService.query(filterBy)
+    console.log('actionnnns ', products)
     dispatch({ type: 'SET_PRODUCTS', products })     
-    dispatch({ type: 'SET_LOADING', isLoading: false })
+    dispatch({ type: 'SET_PRODUCT_LOADING', isLoading: false })
   }
 }
 

@@ -1,0 +1,19 @@
+{
+  "sites": [
+    {
+      "id": "s1",
+      "name": "Site 1",
+      "location": "Location 1"
+    },
+    {
+      "id": "s2",
+      "name": "Site 2",
+      "location": "Location 2"
+    },
+    {
+      "id": "s3",
+      "name": "Site 3",
+      "location": "Location 3"
+    }
+  ]
+}

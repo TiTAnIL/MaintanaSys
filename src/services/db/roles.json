@@ -1,0 +1,20 @@
+[
+    {
+      "id": "r1",
+      "name": "Field Agent",
+      "permissions": [
+        "view_orders",
+        "place_orders"
+      ]
+    },
+    {
+      "id": "r2",
+      "name": "Manager",
+      "permissions": [
+        "view_orders",
+        "approve_orders",
+        "manage_agents"
+      ]
+    }
+  ]
+  

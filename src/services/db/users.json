@@ -1,0 +1,51 @@
+{
+    "users": [
+        {
+            "id": "m1",
+            "name": "John Smith",
+            "email": "john@example.com",
+            "phone": "123-456-7890",
+            "assigned_agents": [
+                "fa1"
+            ],
+            "password": "123",
+            "token": "generated_token_here"
+        },
+        {
+            "id": "m2",
+            "name": "Jane Doe",
+            "email": "jane@example.com",
+            "phone": "987-654-3210",
+            "assigned_agents": [
+                "fa2"
+            ],
+            "password": "123",
+            "token": "generated_token_here"
+        },
+        {
+            "id": "fa1",
+            "name": "Michael Johnson",
+            "email": "michael@example.com",
+            "phone": "111-222-3333",
+            "manager_id": "m1",
+            "assigned_sites": [
+                "s1",
+                "s2"
+            ],
+            "password": "hashed_password_here",
+            "token": "generated_token_here"
+        },
+        {
+            "id": "fa2",
+            "name": "Emily Davis",
+            "email": "emily@example.com",
+            "phone": "444-555-6666",
+            "manager_id": "m2",
+            "assigned_sites": [
+                "s3"
+            ],
+            "password": "123",
+            "token": "generated_token_here"
+        }
+    ]
+}

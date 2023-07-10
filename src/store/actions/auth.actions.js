@@ -6,7 +6,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
-export const SET_LOADING = 'SET_LOADING';
+export const SET_AUTH_LOADING = 'SET_AUTH_LOADING';
 
 export const  loginRequest = () => {
   return {
@@ -14,9 +14,11 @@ export const  loginRequest = () => {
   };
 };
 
-export const loginSuccess = () => {
+export const loginSuccess = (id) => {
+  console.log('id', id)
   return {
-    type: LOGIN_SUCCESS
+    type: LOGIN_SUCCESS,
+    id
   };
 };
 
@@ -35,27 +37,43 @@ export const logoutRequest = () => {
 
 export const setLoading = (isLoading) => {
   return {
-    type: SET_LOADING,
+    type: SET_AUTH_LOADING,
     isLoading
   };
 };
 
+// export const login = (credentials) => {
+//   console.log('aut login')
+//   return async (dispatch) => {
+//     dispatch(loginRequest());
+//     try {
+//       // Call your authentication service or API to perform login
+//       await authService.login(credentials)
+//       // showSuccessMsg('Logged in successfully!');
+//     } catch (error) {
+//       dispatch(loginFailure(error.message));
+//       showErrorMsg('Failed to log in');
+//       console.log('Failed to log in', error);
+//     }
+//   };
+// };
+
+
 export const login = (credentials) => {
-  console.log('aut login')
   return async (dispatch) => {
     dispatch(loginRequest());
     try {
-      // Call your authentication service or API to perform login
-      await authService.login(credentials)
-      // dispatch(loginSuccess());
-      // showSuccessMsg('Logged in successfully!');
+      const userId = await authService.performLogin(credentials);
+      dispatch(loginSuccess(userId));
     } catch (error) {
       dispatch(loginFailure(error.message));
-      showErrorMsg('Failed to log in');
       console.log('Failed to log in', error);
     }
   };
 };
+
+
+
 
 export const logout = () => {
     return async (dispatch) => {

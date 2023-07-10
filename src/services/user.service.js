@@ -1,7 +1,7 @@
 import { storageService } from "./async-storage.service.js"
 import { store } from '../store/index'
-import { updateUser } from "../store/actions/user.actions.js";
-import { loadUsers } from "../store/actions/users.actions.js";
+import { getActionAddUser, getActionUpdateUser, updateUser } from "../store/actions/user.actions.js";
+// import { utilService } from "./util.service.js";
 
 
 const STORAGE_KEY = 'user'
@@ -15,27 +15,32 @@ const userChannel = new BroadcastChannel('userChannel')
 export const userService = {
   query,
   getById,
-  save
+  save,
+  getByToken
 }
 
 window.cs = userService
 
-function insertUser(credentials) {
-  const user = getByCredentials(credentials)
-}
+// function insertUser(credentials) {
+//   const user = getById(credentials)
+// }
 
-async function query(users, credentials) {
+async function query(credentials) {
+  console.log('query call')
+  // call for the logged user by token
   try {
+    // let user = checkCredentials(credentials)
     let user = await storageService.query(STORAGE_KEY); // Fetch the users from storage
-    if (!user || !user.length || credentials) {
-      users = await storageService.get(users)
-      console.log(users)
-      await insertUser(users, credentials); // Insert the new user into the storage
-      users = await storageService.query(users); // Fetch the updated users from storage
-    }
-    return user; // Return the users
+    // if (!user || !user.length || credentials) {
+      // user = await storageService.get(user)
+      // console.log(user)
+      // console.log('dsfjhsdjkfjsdlkfjdsaklfjadsklfjdsklfsdjfklsdfjlsdfjsdklfjsdklf')
+      // await insertUser(user, credentials); // Insert the new user into the storage
+      // user = await storageService.query(user); // Fetch the updated users from storage
+    // }
+    return user; // Return the user
   } catch (error) {
-    console.error('Failed to query users:', error);
+    console.error('Failed to query user:', error);
     throw error;
   }
 }
@@ -43,19 +48,24 @@ async function query(users, credentials) {
 
 async function save(user) {
   var savedUser
-  if (user.id) {
+  if (user.token) {
     savedUser = await storageService.put(STORAGE_KEY, user)
-    userChannel.postMessage(updateUser(savedUser))
+    userChannel.postMessage(getActionUpdateUser(savedUser))
+  } else {
+    // TODO: owner is set by the beckend
+    // user.owner = userService.getLoggedinUser()
+    savedUser = await storageService.post(STORAGE_KEY, user)
+    userChannel.postMessage(getActionAddUser(savedUser))
   }
   return savedUser
 }
 
 
-function getById(userId) {
-  return storageService.get(STORAGE_KEY, userId)
+function getById(id) {
+  return storageService.get(STORAGE_KEY, id)
 }
 
-function getByCredentials(credentials) {
-  console.log('getbycrede', credentials)
-  return storageService.get(STORAGE_KEY, credentials.username)
+function getByToken(token) {
+  console.log('getbytoken', token)
+  return storageService.get(STORAGE_KEY, token)
 }

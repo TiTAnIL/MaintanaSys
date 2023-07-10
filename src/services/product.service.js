@@ -25,10 +25,13 @@ export const productService = {
 window.cs = productService
 
 async function insertDemoData() {
-  const response = await fetch('./products.json')
-  const data = await response.json()
-  const demoData = data.fetchedProducts
-  storageService.postMany(STORAGE_KEY, demoData)
+  try {
+    const jsonData = require('./db/products.json');
+    const demoData = jsonData.products;
+    storageService.postMany(STORAGE_KEY, demoData);
+  } catch (error) {
+    console.error('Failed to insert demo data:', error);
+  }
 }
 
 async function query(filterBy) {
@@ -53,7 +56,6 @@ async function query(filterBy) {
   }
   return fetchedProducts;
 }
-
 
 async function save(product) {
   var savedProduct

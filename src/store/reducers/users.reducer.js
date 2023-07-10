@@ -24,7 +24,7 @@ export function usersReducer(state = INITIAL_STATE, action) {
       case 'REMOVE_USER':
           return {
               ...state,
-              users: state.users.filter(user => user.id !== action.userId)
+              users: state.users.filter(user => user.id !== action.id)
           }
 
       case 'UPDATE_USER':
@@ -38,7 +38,7 @@ export function usersReducer(state = INITIAL_STATE, action) {
       //         ...state,
       //         filterBy: { ...action.filterBy }
           // }
-      case 'SET_LOADING':
+      case 'SET_USERS_LOADING':
           return {
               ...state,
               isLoading: action.isLoading

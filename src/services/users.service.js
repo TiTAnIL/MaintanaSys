@@ -23,7 +23,7 @@ export const usersService = {
 async function insertDemoData() {
   try {
     console.log('inserting demo data');
-    const jsonData = require('./users.json');
+    const jsonData = require('./db/users.json');
     const demoData = jsonData.users;
     storageService.postMany(STORAGE_KEY, demoData);
   } catch (error) {
@@ -54,11 +54,11 @@ async function save(user) {
     return savedUser
   }
 
-function getById(userId) {
-  return storageService.get(STORAGE_KEY, userId);
+function getById(id) {
+  return storageService.get(STORAGE_KEY, id);
 }
 
-async function remove(userId) {
-  await storageService.remove(STORAGE_KEY, userId);
+async function remove(id) {
+  await storageService.remove(STORAGE_KEY, id);
 //   userChannel.postMessage(removeUser());
 }

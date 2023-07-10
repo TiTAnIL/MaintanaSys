@@ -1,5 +1,5 @@
 
-import { Shop } from "./views/shop.jsx";
+import { SiteManagement } from "./views/site-management.jsx";
 import { AlufApp } from "./views/aluf-app.jsx";
 
 const routes = [
@@ -8,8 +8,12 @@ const routes = [
         component: <AlufApp />,
     },
     {
-        path: '/shop',
-        component: <Shop />
+        path: '/sitemanagment/:id',
+        component: <SiteManagement />
     },
+    // {
+        // path: '/user/:userId/site/:siteId',
+        // component: <sites />,
+    //   }
 ]
 export default routes
