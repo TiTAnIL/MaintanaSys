@@ -40,6 +40,14 @@ export function setFilterBy(  ) {
   }
 }
 
+export async function getUsersByIds(assignedIds) {
+  const fatchedUsers = await storageService.query(STORAGE_KEY);
+  const filteredSites = fatchedUsers.filter((user) =>
+    assignedIds.includes(user.id)
+  );
+  return filteredSites;
+}
+
 export function removeUser(userId) {
   return async (dispatch) => {
     try {

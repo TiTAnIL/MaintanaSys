@@ -52,7 +52,6 @@ async function query(filterBy) {
 }
 
 async function getSitesByAssignedIds(assignedIds) {
-  console.log(assignedIds)
   const fetchedSites = await storageService.query(STORAGE_KEY);
   const filteredSites = fetchedSites.filter((site) =>
     assignedIds.includes(site.id)

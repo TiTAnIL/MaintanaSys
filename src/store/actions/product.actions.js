@@ -36,7 +36,7 @@ export function loadProducts() {
   }
 }
 
-export function setFilterBy(filterBy) {
+export function setFilterBy(filterBy = null) {
   return (dispatch) => {
     dispatch({ type: 'SET_FILTER_BY', filterBy })
   }
