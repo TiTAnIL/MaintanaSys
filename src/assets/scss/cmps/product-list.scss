@@ -1,0 +1,14 @@
+.products-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 20px;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card-layout {
+    display: flex;
+    flex-wrap: wrap;
+  }

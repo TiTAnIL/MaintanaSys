@@ -48,7 +48,7 @@ export function UserList({ AssignedIds, title }) {
 
   return (
     <section className="user-cards">
-      <div className="card-layout">
+      <div className="user-layout">
         <h2>Choose {title}</h2>
         <select value={selectedId} onChange={handleSiteChange}>
           <option value="">Select a {title}</option>
@@ -58,8 +58,11 @@ export function UserList({ AssignedIds, title }) {
             </option>
           ))}
         </select>
+
       </div>
+
       {selectedId ? <ProductList selectedId={selectedId} /> : null}
+
     </section>
   );
 }

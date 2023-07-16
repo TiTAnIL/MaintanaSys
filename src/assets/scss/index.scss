@@ -6,9 +6,13 @@
 @use 'basics/helpers';
 
 // Views
-// @use 'views/bloom-app';
+@use 'views/site-management';
 // @use 'views/product-details';
 
 // Cmps
 @use 'cmps/app-header';
 @use 'cmps/login';
+@use 'cmps/user-list';
+@use 'cmps/product-list';
+@use 'cmps/product-preview';
+
