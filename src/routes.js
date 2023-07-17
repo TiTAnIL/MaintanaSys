@@ -1,6 +1,7 @@
 
 import { SiteManagement } from "./views/site-management.jsx";
 import { AlufApp } from "./views/aluf-app.jsx";
+import { ShoppingCart } from "./views/shoping-cart.jsx";
 
 const routes = [
     {
@@ -11,9 +12,9 @@ const routes = [
         path: '/sitemanagment/:id',
         component: <SiteManagement />
     },
-    // {
-        // path: '/user/:userId/site/:siteId',
-        // component: <sites />,
-    //   }
+    {
+        path: '/shoppingCart',
+        component: <ShoppingCart />,
+    }
 ]
 export default routes

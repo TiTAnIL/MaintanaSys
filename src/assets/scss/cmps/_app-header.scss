@@ -3,5 +3,36 @@
 
 
 .app-header {
-    background-color: green;
-}
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    height: 40px; /* Adjust the height as needed */
+    width: auto; /* Adjust the width as needed */
+    border-radius: 50% 50% 50% 50%;
+  }
+  
+  .cart-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .cart-icon {
+    height: 30px; /* Adjust the height as needed */
+    width: auto; /* Adjust the width as needed */
+  }
+  

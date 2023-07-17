@@ -7,6 +7,7 @@ export function ProductList() {
 
     const dispatch = useDispatch()
     const { products } = useSelector(state => state.productModule)
+    const { items } = useSelector(state => state.cartModule);
 
     useEffect(() => {
         console.log('product list')
@@ -19,6 +20,7 @@ export function ProductList() {
                 {products.map((product) => (
                     <ProductPreview key={product.id} product={product} />
                 ))}
+                <button onClick={() => console.log(items)}>sdfdsfsdfsdf</button>
             </div>
         </section>
     );

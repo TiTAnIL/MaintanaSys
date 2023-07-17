@@ -39,7 +39,6 @@ export function UserList({ AssignedIds, title }) {
 
   function handleSiteChange(event) {
     setSelectedId(event.target.value);
-    console.log('Selected Id:', event.target.value);
   }
 
   if (isLoading) {

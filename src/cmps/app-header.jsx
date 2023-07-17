@@ -1,5 +1,6 @@
-// import logo from '../assets/imgs/logo.png'
-import { useSelector } from "react-redux"
+import { Link } from 'react-router-dom';
+import logo from '../assets/imgs/logo.png'
+import cartIcon from '../assets/imgs/shop_cart.png'
 
 export function AppHeader() {
 
@@ -7,14 +8,20 @@ export function AppHeader() {
 
 
     return (
-        <header className='app-header'>
-            <div>
-                <h4>Aluf logo</h4>
-                {/* { isAuthenticated ? <div> */}
-                    {/* <button>LogOut</button> */}
-                {/* </div> : <button>LogIn</button> }  */}
+        <header className="app-header">
+            <div className="header-container">
+                <div className="logo-container">
+                    <Link to="/">
+                        <img className="logo" src={logo} alt="Logo" />
+                    </Link>
+                </div>
+                <div className="cart-container">
+                    <Link to="/shoppingCart">
+                        <img className="cart-icon" src={cartIcon} alt="Cart" />
+                    </Link>
+
+                </div>
             </div>
         </header>
-    )
+    );
 }
-    

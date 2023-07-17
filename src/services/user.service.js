@@ -26,7 +26,6 @@ window.cs = userService
 // }
 
 async function query(credentials) {
-  console.log('query call')
   // call for the logged user by token
   try {
     // let user = checkCredentials(credentials)

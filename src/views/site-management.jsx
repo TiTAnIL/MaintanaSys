@@ -37,7 +37,7 @@ export function SiteManagement() {
           ) : (
             <UserList AssignedIds={assignedSites} title="Site" />
           )}
-          <button onClick={() => console.log('adding to cart from site management')}>Add To Cart</button>
+          {/* <button onClick={() => console.log('adding to cart from site management')}>Add To Cart</button> */}
 
         </div>
 

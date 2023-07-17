@@ -20,7 +20,6 @@ function query(entityType, delay = 600) {
 
 
 function get(entityType, entityId) {
-    console.log('entityID', entityId)
     return query(entityType)
         .then(entities => {
             return entities.find(entity => entity.id === entityId)
@@ -29,9 +28,6 @@ function get(entityType, entityId) {
 
 
 function post(entityType, newEntity) {
-    console.log(entityType)
-    console.log(newEntity)
-    console.log(newEntity.id)
     newEntity.id = newEntity.id || _makeId()
     return query(entityType)
         .then(entities => {
