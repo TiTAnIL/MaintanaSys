@@ -14,7 +14,8 @@ export function Login() {
 
   useEffect(() => {
     if (userAuth.id) {
-      navigate(`/sitemanagment/${userAuth.id}`);
+      console.log('userauth.id', userAuth.id)
+      navigate(`/user/${userAuth.id}`);
     }
   }, [navigate, userAuth]);
 

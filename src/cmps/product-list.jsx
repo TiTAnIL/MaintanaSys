@@ -10,9 +10,12 @@ export function ProductList() {
     const { items } = useSelector(state => state.cartModule);
 
     useEffect(() => {
-        console.log('product list')
         dispatch(loadProducts())
     }, []);
+
+    // const onAddToCart = async () => {
+    //     await dispatch(addItem({ ...product, quantity }))
+    // }
 
     return (
         <section className="products-cards">
@@ -21,6 +24,7 @@ export function ProductList() {
                     <ProductPreview key={product.id} product={product} />
                 ))}
                 <button onClick={() => console.log(items)}>sdfdsfsdfsdf</button>
+                {/* <button onClick={onAddToCart}>Add to cart</button> */}
             </div>
         </section>
     );

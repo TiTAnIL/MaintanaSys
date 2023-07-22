@@ -9,7 +9,8 @@
                 "fa1"
             ],
             "password": "123",
-            "token": "generated_token_here"
+            "token": "generated_token_here",
+            "privileges": "manager"
         },
         {
             "id": "m2",
@@ -20,7 +21,8 @@
                 "fa2"
             ],
             "password": "123",
-            "token": "generated_token_here"
+            "token": "generated_token_here",
+            "privileges": "manager"
         },
         {
             "id": "fa1",
@@ -33,7 +35,8 @@
                 "s2"
             ],
             "password": "hashed_password_here",
-            "token": "generated_token_here"
+            "token": "generated_token_here",
+            "privileges": "agent"
         },
         {
             "id": "fa2",
@@ -45,7 +48,17 @@
                 "s3"
             ],
             "password": "123",
-            "token": "generated_token_here"
+            "token": "generated_token_here",
+            "privileges": "agent"
+        },
+        {
+            "id": "ad1",
+            "name": "John Smith",
+            "email": "dima@example.com",
+            "phone": "123-456-7890",
+            "password": "123",
+            "token": "generated_token_here",
+            "privileges": "admin"
         }
     ]
 }

@@ -9,7 +9,7 @@ const routes = [
         component: <AlufApp />,
     },
     {
-        path: '/sitemanagment/:id',
+        path: '/user/:id',
         component: <SiteManagement />
     },
     {

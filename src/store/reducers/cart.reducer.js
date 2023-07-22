@@ -29,13 +29,13 @@ export function cartReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 items: state.items.map((item) =>
-                    item.id === action.itemId ? { ...item, quantity: action.quantity } : item
+                    item.id === action.id ? { ...item, quantity: action.quantity } : item
                 ),
             };
         case "REMOVE_FROM_CART":
             return {
                 ...state,
-                items: state.items.filter((item) => item.id !== action.itemId),
+                items: state.items.filter((item) => item.id !== action.id),
             };
         case "CLEAR_CART":
             return { ...state, items: [] };

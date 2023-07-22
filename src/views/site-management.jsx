@@ -5,50 +5,35 @@ import { usersService } from "../services/users.service";
 import { UserList } from "../cmps/user-list";
 
 
+// component to check if the user is an agent or a site manager and display the relevant info
+
+
 export function SiteManagement() {
-  const [user, setUser] = useState(null);
-  const { id } = useParams();
-  const [assignedSites, setAssignedSites] = useState(null);
-  const [assignedAgents, setAssignedAgents] = useState(null);
+    const [user, setUser] = useState(null)
+    const { id } = useParams()
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const fetchedUser = await usersService.getById(id);
-        setUser(fetchedUser);
-        fetchedUser.id.slice(0, 2) === 'fa'
-          ? setAssignedSites(fetchedUser.assigned_sites)
-          : setAssignedAgents(fetchedUser.assigned_agents);
-      } catch (error) {
-        console.log('Failed to fetch user info:', error);
-      }
-    };
-
-    fetchUserInfo();
-  }, [id]);
-
-  if (user && (assignedSites || assignedAgents)) {
-    return (
-      <>
-        <div className="site-management-container">
-          <h1>Hi {user.name}</h1>
-          {assignedAgents ? (
-            <UserList AssignedIds={assignedAgents} title="Agent" />
-          ) : (
-            <UserList AssignedIds={assignedSites} title="Site" />
-          )}
-          {/* <button onClick={() => console.log('adding to cart from site management')}>Add To Cart</button> */}
-
-        </div>
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const fetchedUser = await usersService.getById(id)
+                setUser(fetchedUser)
+                console.log('mamag', 'fetchedUser:', fetchedUser)
+            } catch (error) {
+                console.log('failed to fetch user info:', error)
+            }
+        }
+        fetchUserInfo()
+    }, [id])
 
 
-      </>
-    );
-  }
+    if (user) {
+        return (
+            <div className="site-management">
+                <h1>Hello {user.name}</h1>
+                <UserList user={user} />
+            </div>
+        )
+    }
+    return <div>Loading...</div>
 
-  return (
-    <>
-      <h1>Loading</h1>
-    </>
-  );
 }

@@ -83,6 +83,7 @@ function getEmptyProduct() {
   return {
     "product_name": "",
     "price": 0,
-    "supplier": ""
+    "supplier": "",
+    "quantity": 0
   }
 }

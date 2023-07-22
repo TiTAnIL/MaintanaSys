@@ -2,12 +2,12 @@ import { cartService } from "../../services/cart.service.js"
 import { showSuccessMsg, showErrorMsg, showUserMsg } from '../../services/event-bus.service.js'
 
 // Action Creators
-export function getActionRemoveitem(itemId) {
-    return { type: 'REMOVE_FROM_CART', itemId }
+export function getActionRemoveitem(id) {
+    return { type: 'REMOVE_FROM_CART', id }
 }
 
 export function getActionAdditem(item) {
-    console.log('getActionAdditem')
+    console.log('getActionAdditem', item)
     return {
         type: 'ADD_TO_CART',
         item,
@@ -36,23 +36,23 @@ export function loadCart() {
     }
 }
 
-export function additem(item) {
+export function addItem(item) {
     console.log('addCart(item):', item)
     return async (dispatch) => {
         try {
-            console.log(item)
+            // console.log(item)
             const savedCart = await cartService.save(item)
-            console.log(savedCart)
+            // console.log(savedCart)
             dispatch(getActionAdditem(savedCart))
             showSuccessMsg('Added to cart!')
         } catch (err) {
             showErrorMsg('Cannot add item')
-            console.log('Cannot add item', err)
+            // console.log('Cannot add item', err)
         }
     }
 }
 
-export function updateitem(item) {
+export function updateItem(item) {
     return async (dispatch) => {
         try {
             console.log(item)
@@ -67,12 +67,12 @@ export function updateitem(item) {
     }
 }
 
-export function removeitem(itemId) {
-    console.log(itemId)
+export function removeItem(id) {
+    console.log(id)
     return (dispatch, getState) => {
-        cartService.remove(itemId)
+        cartService.remove(id)
             .then(() => {
-                dispatch({ type: 'REMOVE_FROM_CART', itemId })
+                dispatch({ type: 'REMOVE_FROM_CART', id })
             })
             .catch(err => {
                 console.log('err:', err)

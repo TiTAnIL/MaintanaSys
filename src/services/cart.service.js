@@ -26,7 +26,6 @@ export const cartService = {
     getById,
     save,
     remove,
-    getEmptyOrder,
 }
 window.cs = cartService
 
@@ -34,9 +33,9 @@ async function query() {
     return storageService.query(STORAGE_KEY)
 }
 
-async function remove(itemId) {
-    await storageService.remove(STORAGE_KEY, itemId)
-    cartChannel.postMessage(getActionRemoveitem(itemId))
+async function remove(id) {
+    await storageService.remove(STORAGE_KEY, id)
+    cartChannel.postMessage(getActionRemoveitem(id))
 }
 
 async function save(item) {
@@ -57,11 +56,3 @@ function getById(id) {
     return storageService.get(STORAGE_KEY, id)
 }
 
-function getEmptyOrder() {
-    return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
-    }
-}
-
-const demoData = []

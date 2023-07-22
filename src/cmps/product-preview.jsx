@@ -1,40 +1,37 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { additem, updateitem } from "../store/actions/cart.actions";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../store/actions/cart.actions";
 
 export function ProductPreview({ product }) {
   const [quantity, setQuantity] = useState(0);
   const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.cartModule);
 
-  useEffect(() => {
-    const cartitem = items.find((item) => item.id === product.id);
-      if (cartitem) {
-      setQuantity(cartitem.quantity);
-    }
-  }, [items, product.id]);
+  // useEffect(() => {
+  //   const updatedProduct = { ...product, quantity: quantity };
+  //   dispatch(addItem(updatedProduct));
+  // }, [quantity, dispatch, product]);
 
-  const handleIncrease = () => {
-    setQuantity(quantity + 1);
-    console.log('product', product)
-    dispatch(additem({ item: product, quantity: quantity + 1 }));
-  };
-  
-  const handleDecrease = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-      dispatch(updateitem({ item: product, quantity: quantity - 1 }));
+
+  const handleUpdateQuantity = (newQuantity) => {
+    if (newQuantity > 0) {
+      setQuantity(newQuantity)
+      const updatedProduct = { ...product, quantity: newQuantity };
+      dispatch(addItem(updatedProduct));
     }
-  };
+  }
 
   return (
     <div className="preview-card">
       <p className="product-name">{product.product_name}</p>
       <p className="product-price">{product.price}</p>
       <div className="quantity-controls">
-        <button onClick={handleDecrease}>-</button>
+        <button onClick={() => handleUpdateQuantity(quantity - 1)}>
+          -
+        </button>
         <span>{quantity}</span>
-        <button onClick={handleIncrease}>+</button>
+        <button onClick={() => handleUpdateQuantity(quantity + 1)}>
+          +
+        </button>
       </div>
     </div>
   );
