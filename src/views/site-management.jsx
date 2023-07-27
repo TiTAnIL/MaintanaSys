@@ -17,7 +17,6 @@ export function SiteManagement() {
             try {
                 const fetchedUser = await usersService.getById(id)
                 setUser(fetchedUser)
-                console.log('mamag', 'fetchedUser:', fetchedUser)
             } catch (error) {
                 console.log('failed to fetch user info:', error)
             }
@@ -35,5 +34,4 @@ export function SiteManagement() {
         )
     }
     return <div>Loading...</div>
-
 }

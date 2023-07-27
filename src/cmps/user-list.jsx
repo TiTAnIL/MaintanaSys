@@ -1,12 +1,3 @@
-
-// when the user is manager - the AssignedIds array will contain the agents ids
-// when the user is an agent - the AssignedIds array will contain the sites ids
-// the user cant be both an agent and a site manager
-// if the user is an manager we will get dropdow with the agents assigned to him
-// when the user choose an agent from the dropdown we will display the sites assigned to the agent
-// if the user is an agent we will display the sites assigned to him in the dropdown
-// when assigned sites are chosen we will display load <ProductList />
-
 import { useEffect, useState } from "react";
 import { usersService } from "../services/users.service";
 import { siteService } from "../services/site.service";
@@ -15,100 +6,122 @@ import { ProductList } from "./product-list";
 export function UserList({ user }) {
 
   const [assignedIds, setAssignedIds] = useState([])
-  const [assignedUsers, setAssignedUsers] = useState([])
   const [assignedSites, setAssignedSites] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
   const [selectedSite, setSelectedSite] = useState(null)
+  const [assignedAgents, setAssignedAgents] = useState(null)
 
   useEffect(() => {
-    if (user.privileges === 'agent') {
-      setAssignedIds(user.assigned_sites)
-      console.log('assignedIds:', assignedIds)
-    } else if (user.privileges === 'manager') {
+    if (user.role === 'manager') {
       setAssignedIds(user.assigned_agents)
-      console.log('assignedIds:', assignedIds)
+    } else {
+      setAssignedIds(user.assigned_sites)
     }
-  }, [user])
+  }, [user.role, user.assignedAgents, user.assignedSites])
 
   useEffect(() => {
-    // if the user is an agent we will call siteService.getById for each site id in assignedIds
-    // if the user is a manager we will call usersService.getById for each user id in assignedIds
-    // if user is a manager when he selects assigned agent from the dropdown we will use getById to get the agent info and set the assignedSites state to the agent assigned sites
+  }, [assignedAgents])
 
-    if (user.privileges === 'agent') {
+  useEffect(() => {
+  }, [assignedSites])
+
+  useEffect(() => {
+    if (selectedUser) {
       const fetchAssignedSites = async () => {
         try {
-          const fetchedSites = await Promise.all(assignedIds.map(async (siteId) => {
-            const fetchedSite = await siteService.getById(siteId)
-            return fetchedSite
-          }))
-          setAssignedSites(fetchedSites)
+          const fetchedAssignedSites = await Promise.all(selectedUser.assigned_sites.map(id => siteService.getById(id)))
+          setAssignedSites(fetchedAssignedSites)
         } catch (error) {
           console.log('failed to fetch assigned sites:', error)
         }
       }
       fetchAssignedSites()
-    } else if (user.privileges === 'manager') {
-      const fetchAssignedUsers = async () => {
-        try {
-          const fetchedUsers = await Promise.all(assignedIds.map(async (userId) => {
-            const fetchedUser = await usersService.getById(userId)
-            return fetchedUser
-          }))
-          setAssignedUsers(fetchedUsers)
-        } catch (error) {
-          console.log('failed to fetch assigned users:', error)
-        }
-      }
-      fetchAssignedUsers()
     }
-  }, [assignedIds, user])
-  
+  }, [selectedUser])
 
-  // after the user selects a value from the dropdown we will display the ProductList component if the user is an agent
-  // or we will open another dropdown that will display the sites assigned to the selected agent
- 
+  useEffect(() => {
+    const fetchAssignedIds = async () => {
+      try {
+        const fetchedAssignedIds = await usersService.getById(user.id)
+        setAssignedIds(fetchedAssignedIds)
+      } catch (error) {
+        console.log('failed to fetch assigned ids:', error)
+      }
+    }
+    fetchAssignedIds()
+  }, [user.id])
+
+  useEffect(() => {
+    const fetchAssignedInfo = async () => {
+      try {
+        if (user.role === 'manager') {
+          const fetchedAssignedAgents = await Promise.all(user.assigned_agents.map(id => usersService.getById(id)))
+          setAssignedAgents(fetchedAssignedAgents)
+        } else {
+          const fetchedAssignedSites = await Promise.all(user.assigned_sites.map(id => siteService.getById(id)))
+          setAssignedSites(fetchedAssignedSites)
+        }
+      } catch (error) {
+        console.log('failed to fetch assigned info:', error)
+      }
+    }
+    fetchAssignedInfo()
+  }, [assignedIds, user.role])
+
   const handleSelectChange = (event) => {
-    console.log('event.target.value:', event.target.value)
-    if (user.privileges === 'agent') {
-      console.log('event.target.value:', event.target.value)
-      setSelectedSite(event.target.value)
-    } else if (user.privileges === 'manager') {
-      console.log('event.target.value:', event.target.value)
-      setSelectedUser(event.target.value)
-
+    if (user.role === 'manager') {
+      setSelectedUser(assignedAgents.find(agent => agent.id === event.target.value))
+    } else {
+      setSelectedSite(assignedSites.find(site => site.id === event.target.value))
     }
   }
 
+  const handleSiteChange = (event) => {
+    setSelectedSite(assignedSites.find(site => site.id === event.target.value))
+  }
 
-
-  if (user) {
-    return (
-      <div className="user-list">
-        <h2>{user.privileges}</h2>
-        <p>user: {user.name}</p>
-        <p>user id: {user.id}</p>
-        <p>user role: {user.privileges}</p>
-        <h3>Assigned:</h3>
-
-        {user.privileges === 'agent' && <select onChange={handleSelectChange}>
-          <option value="">Select Site</option>
-          {assignedSites.map((site) => {
-            return <option key={site.id} value={site.id}>{site.name}</option>
-          })}
-        </select>}
-        {user.privileges === 'manager' && <select onChange={handleSelectChange}>
-          <option value="">Select Agent</option>
-          {assignedUsers.map((user) => {
-            return <option key={user.id} value={user.id}>{user.name}</option>
-          })}
-        </select>}
-        
-      </div>
+  {
+    if (!user) return (
+      <h1>Loading...</h1>
     )
   }
 
-  return (
-    <h1>Loading...</h1>
-  )
+  {
+    return (
+      <div className="user-list">
+        <div className="user-list-container">
+        <div className="selects-container">
+          {/* <h2>{user.role === 'manager' ? 'Select Agent' : 'Select User'}</h2> */}
+          <div className="select-container">
+            <option value="select">Select</option>
+            <select onChange={(event) => { handleSelectChange(event); }}>
+              <option value="select">Select {user.role === 'manager' ? 'agent' : 'site'}</option>
+              {user.role === 'manager' && assignedAgents && assignedAgents.map(({ id, name }) => (
+                <option key={id} value={id}>{name}</option>
+              ))}
+
+              {user.role === 'agent' && assignedSites && assignedSites.map(site => <option key={site.id} value={site.id}>{site.name}</option>)}
+            </select>
+            {user.role === 'manager' && selectedUser && <h2>Selected: {selectedUser.name}</h2>}
+          </div>
+          <div className="select-container">
+            {user.role === 'manager' && selectedUser && (
+              <select onChange={(event) => { handleSiteChange(event) }}>
+                <option value="select">Select Site</option>
+                {assignedSites.map(site => <option key={site.id} value={site.id}>{site.name}
+                </option>)}
+              </select>
+
+            )}
+            {user.role === 'agent' ? selectedSite && <h2>Selected: {selectedSite.name}</h2> : selectedSite && selectedUser && <h2>Selected: {selectedSite.name}</h2>}
+          </div >
+        </div >
+
+        {user.role === 'agent' && selectedSite && <ProductList site={selectedUser} />}
+        {user.role === 'manager' && selectedUser && selectedSite && <ProductList user={selectedUser} site={selectedSite} />}
+      </div>
+      </div >
+
+    );
+  }
 }

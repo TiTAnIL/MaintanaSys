@@ -1,5 +1,34 @@
-.user-layout {
+.user-list {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+
+.user-list-container {
     display: flex;
     flex-direction: column;
-    padding-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.selects-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }

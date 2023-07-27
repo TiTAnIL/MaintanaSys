@@ -73,6 +73,8 @@ async function save(site) {
 }
 
 function getById(siteId) {
+  console.log('siteId', siteId)
+  console.log('returning', storageService.get(STORAGE_KEY, siteId))
   return storageService.get(STORAGE_KEY, siteId)
 }
 
@@ -87,3 +89,9 @@ function getEmptySite() {
     "location": ""
   }
 }
+
+
+// {user.role === 'manager' && assignedSites && <select onChange={handleSelectChange}>
+// <option value="select">Select</option>
+// {assignedSites.map(site => <option key={site.id} value={site.id}>{site.name}</option>)}
+// </select>}

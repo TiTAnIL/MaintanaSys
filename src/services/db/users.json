@@ -10,7 +10,7 @@
             ],
             "password": "123",
             "token": "generated_token_here",
-            "privileges": "manager"
+            "role": "manager"
         },
         {
             "id": "m2",
@@ -18,11 +18,12 @@
             "email": "jane@example.com",
             "phone": "987-654-3210",
             "assigned_agents": [
-                "fa2"
+                "fa2",
+                "fa1"
             ],
             "password": "123",
             "token": "generated_token_here",
-            "privileges": "manager"
+            "role": "manager"
         },
         {
             "id": "fa1",
@@ -36,7 +37,7 @@
             ],
             "password": "hashed_password_here",
             "token": "generated_token_here",
-            "privileges": "agent"
+            "role": "agent"
         },
         {
             "id": "fa2",
@@ -49,7 +50,7 @@
             ],
             "password": "123",
             "token": "generated_token_here",
-            "privileges": "agent"
+            "role": "agent"
         },
         {
             "id": "ad1",
@@ -58,7 +59,7 @@
             "phone": "123-456-7890",
             "password": "123",
             "token": "generated_token_here",
-            "privileges": "admin"
+            "role": "admin"
         }
     ]
 }

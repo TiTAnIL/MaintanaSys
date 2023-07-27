@@ -11,7 +11,7 @@ function query(entityType, delay = 600) {
     var entities = JSON.parse(localStorage.getItem(entityType)) || []
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            console.log('query entitites', entityType, entities)
+            // console.log('query entitites', entityType, entities)
             resolve(entities)
         }, delay)
     })
@@ -65,7 +65,6 @@ function _save(entityType, entities) {
 
 
 function postMany(entityType, newNetities) {
-    console.log('ettype', entityType, newNetities)
     return query(entityType, newNetities)
         .then(entities => {
             newNetities = newNetities.map(entity => ({ ...entity, id: (entity.id) ? entity.id : _makeId() }))
