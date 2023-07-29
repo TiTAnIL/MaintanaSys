@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../store/actions/auth.actions';
-import { usersService } from '../services/users.service';
+import { userService } from '../services/user.service';
 
 export function Login() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export function Login() {
   };
 
   const loadUser = useCallback((id) => {
-    usersService.getById(id).then((user) => {
+    userService.getById(id).then((user) => {
       setUser(user);
     });
   }, []);

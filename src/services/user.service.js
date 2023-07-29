@@ -1,70 +1,64 @@
-import { storageService } from "./async-storage.service.js"
-import { store } from '../store/index'
-import { getActionAddUser, getActionUpdateUser, updateUser } from "../store/actions/user.actions.js";
-// import { utilService } from "./util.service.js";
+import { storageService } from "./async-storage.service.js";
+import { store } from '../store/index';
+import { updateUser } from "../store/actions/user.actions.js";
+import { utilService } from "./util.service.js";
 
+const STORAGE_KEY = 'users';
+const userChannel = new BroadcastChannel('userChannel');
 
-const STORAGE_KEY = 'user'
-const userChannel = new BroadcastChannel('userChannel')
-  ; (() => {
-    userChannel.addEventListener('message', (ev) => {
-      store.dispatch(ev.data)
-    })
-  })()
+;(() => {
+  userChannel.addEventListener('message', (ev) => {
+    store.dispatch(ev.data);
+  });
+})();
+
 
 export const userService = {
   query,
   getById,
   save,
-  getByToken
-}
+  remove
+};
 
-window.cs = userService
-
-// function insertUser(credentials) {
-//   const user = getById(credentials)
-// }
-
-async function query(credentials) {
-  // call for the logged user by token
+async function insertDemoData() {
   try {
-    // let user = checkCredentials(credentials)
-    let user = await storageService.query(STORAGE_KEY); // Fetch the users from storage
-    // if (!user || !user.length || credentials) {
-      // user = await storageService.get(user)
-      // console.log(user)
-      // console.log('dsfjhsdjkfjsdlkfjdsaklfjadsklfjdsklfsdjfklsdfjlsdfjsdklfjsdklf')
-      // await insertUser(user, credentials); // Insert the new user into the storage
-      // user = await storageService.query(user); // Fetch the updated users from storage
-    // }
-    return user; // Return the user
+    console.log('inserting demo data');
+    const jsonData = require('./db/users.json');
+    const demoData = jsonData.users;
+    storageService.postMany(STORAGE_KEY, demoData);
   } catch (error) {
-    console.error('Failed to query user:', error);
-    throw error;
+    console.error('Failed to insert demo data:', error);
   }
 }
 
+window.cs = userService;
+
+async function query() {
+  var fetchedUsers = await storageService.query(STORAGE_KEY);
+  if (!fetchedUsers || !fetchedUsers.length) {
+    insertDemoData();
+  }
+  return fetchedUsers;
+}
 
 async function save(user) {
-  var savedUser
-  if (user.token) {
-    savedUser = await storageService.put(STORAGE_KEY, user)
-    userChannel.postMessage(getActionUpdateUser(savedUser))
-  } else {
-    // TODO: owner is set by the beckend
-    // user.owner = userService.getLoggedinUser()
-    savedUser = await storageService.post(STORAGE_KEY, user)
-    userChannel.postMessage(getActionAddUser(savedUser))
+    var savedUser
+    if (user.id) {
+      savedUser = await storageService.put(STORAGE_KEY, user)
+      userChannel.postMessage(updateUser(savedUser))
+    } else {
+      user.id = utilService.makeId()
+      savedUser = await storageService.post(STORAGE_KEY, user)
+    //   userChannel.postMessage(addUser(savedUser))
+    }
+    return savedUser
   }
-  return savedUser
-}
-
 
 function getById(id) {
-  return storageService.get(STORAGE_KEY, id)
+  return storageService.get(STORAGE_KEY, id);
 }
 
-function getByToken(token) {
-  console.log('getbytoken', token)
-  return storageService.get(STORAGE_KEY, token)
+async function remove(id) {
+  await storageService.remove(STORAGE_KEY, id);
+//   userChannel.postMessage(removeUser());
 }

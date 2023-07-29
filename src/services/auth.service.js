@@ -1,10 +1,10 @@
 import { store } from '../store/index';
 import { loginFailure, loginSuccess, logoutRequest } from "../store/actions/auth.actions.js";
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js';
-import { loadUsers } from '../store/actions/users.actions';
+import { loadUsers } from '../store/actions/user.actions';
 import { storageService } from './async-storage.service';
 import { utilService } from './util.service';
-import { usersService } from './users.service';
+import { userService } from './user.service';
 // import { userService } from './user.service';
 
 const STORAGE_KEY = 'auth'
@@ -28,7 +28,7 @@ export const authService = {
 //     console.log('login')
 //     try {
 //         let user
-//         // var users = await usersService.query()
+//         // var users = await userService.query()
 //         // console.log(users)
 //         // if (!users || !users.length) {
 //         console.log('Logging in...')
@@ -97,7 +97,7 @@ async function performLogin(credentials) {
 
 
 // async function checkCredentials(credentials) {
-//     const users = await usersService.query();
+//     const users = await userService.query();
 //     if (!users || !users.length) {
 //         loadUsers();
 //     }   
@@ -108,7 +108,7 @@ async function performLogin(credentials) {
 //             console.log(userWithoutPass, 'user matched check credentials');
 //             userWithoutPass.isAuthenticated = true;
 //             userWithoutPass.token = utilService.makeId(20);
-//             // usersService.post(userWithoutPass.token);
+//             // userService.post(userWithoutPass.token);
 //             // save(userWithoutPass);
 //             console.log(userWithoutPass)
 //             return userWithoutPass;
@@ -118,7 +118,7 @@ async function performLogin(credentials) {
 // }
 
 export async function checkCredentials(credentials) {
-    const users = await usersService.query();
+    const users = await userService.query();
     if (!users || !users.length) {
       loadUsers();
     }

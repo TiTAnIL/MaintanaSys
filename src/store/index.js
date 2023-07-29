@@ -3,7 +3,7 @@ import { applyMiddleware, combineReducers, compose, legacy_createStore as create
 import thunk from 'redux-thunk'
 import { productReducer } from './reducers/product.reducer'
 import { siteReducer } from './reducers/site.reducer'
-import { usersReducer } from './reducers/users.reducer'
+import { userReducer } from './reducers/user.reducer'
 import { authReducer } from './reducers/auth.reducer'
 import { cartReducer } from './reducers/cart.reducer'
 
@@ -11,7 +11,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const rootReducer = combineReducers({
     siteModule: siteReducer,
-    usersModule: usersReducer,
+    userModule: userReducer,
     authModule: authReducer,
     productModule: productReducer,
     cartModule: cartReducer,

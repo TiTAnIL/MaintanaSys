@@ -23,18 +23,19 @@ export function getActionUpdateSite(site) {
   }
 }
 
-export function loadSites(assignedIds) {
-  console.log('load sites', assignedIds)
-  return async (dispatch, getState) => {
-    try {
-      const sites = await siteService.getSitesByAssignedIds(assignedIds);
-      dispatch({ type: 'SET_SITES', sites });
-      dispatch({ type: 'SET_SITE_LOADING', isLoading: false });
-    } catch (error) {
-      console.log('Failed to load sites:', error);
-    }
-  };
-}
+// TODO: SHOULD BE REPLACED WITH getById
+// export function loadSites(assignedIds) {
+//   console.log('load sites', assignedIds)
+//   return async (dispatch, getState) => {
+//     try {
+//       const sites = await siteService.getSitesByAssignedIds(assignedIds);
+//       dispatch({ type: 'SET_SITES', sites });
+//       dispatch({ type: 'SET_SITE_LOADING', isLoading: false });
+//     } catch (error) {
+//       console.log('Failed to load sites:', error);
+//     }
+//   };
+// }
 
 export function setFilterBy(filterBy) {
   return (dispatch) => {

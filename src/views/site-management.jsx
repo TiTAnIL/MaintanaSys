@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { usersService } from "../services/users.service";
+import { userService } from "../services/user.service";
 import { UserList } from "../cmps/user-list";
 
 
@@ -15,7 +15,7 @@ export function SiteManagement() {
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const fetchedUser = await usersService.getById(id)
+                const fetchedUser = await userService.getById(id)
                 setUser(fetchedUser)
             } catch (error) {
                 console.log('failed to fetch user info:', error)
