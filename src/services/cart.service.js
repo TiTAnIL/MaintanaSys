@@ -4,9 +4,9 @@ import { store } from '../store/index'
 
 
 import {
-    getActionRemoveitem,
-    getActionAdditem,
-    getActionUpdateitem,
+    getActionRemoveItem,
+    getActionAddItem,
+    getActionUpdateItem,
 } from '../store/actions/cart.actions.js'
 
 const STORAGE_KEY = 'cart'
@@ -35,19 +35,19 @@ async function query() {
 
 async function remove(id) {
     await storageService.remove(STORAGE_KEY, id)
-    cartChannel.postMessage(getActionRemoveitem(id))
+    cartChannel.postMessage(getActionRemoveItem(id))
 }
 
 async function save(item) {
     var savedCart
     // if (item._id) {
     // savedCart = await storageService.put(STORAGE_KEY, item)
-    // cartChannel.postMessage(getActionUpdateitem(savedCart))
+    // cartChannel.postMessage(getActionUpdateItem(savedCart))
     // } else {
     // TODO: owner is set by the beckend
     // plant.owner = userService.getLoggedinUser()
     savedCart = await storageService.post(STORAGE_KEY, item)
-    cartChannel.postMessage(getActionAdditem(savedCart))
+    cartChannel.postMessage(getActionAddItem(savedCart))
     // }
     return savedCart
 }

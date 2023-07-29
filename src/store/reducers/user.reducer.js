@@ -52,7 +52,6 @@ export function userReducer(state = INITIAL_STATE, action) {
               ...state,
               isLoading: action.isLoading
           }
-          break
       default:
           return state;
   }

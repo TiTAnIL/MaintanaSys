@@ -2,20 +2,20 @@ import { cartService } from "../../services/cart.service.js"
 import { showSuccessMsg, showErrorMsg, showUserMsg } from '../../services/event-bus.service.js'
 
 // Action Creators
-export function getActionRemoveitem(id) {
+export function getActionRemoveItem(id) {
     return { type: 'REMOVE_FROM_CART', id }
 }
 
-export function getActionAdditem(item) {
-    console.log('getActionAdditem', item)
+export function getActionAddItem(item) {
+    console.log('getActionAddItem', item)
     return {
         type: 'ADD_TO_CART',
         item,
     }
 }
 
-export function getActionUpdateitem(item, quantity) {
-    console.log('getActionUpdateitem')
+export function getActionUpdateItem(item, quantity) {
+    console.log('getActionUpdateItem')
     console.log(item)
     return {
         type: 'UPDATE_ITEM_IN_CART',
@@ -43,7 +43,7 @@ export function addItem(item) {
             // console.log(item)
             const savedCart = await cartService.save(item)
             // console.log(savedCart)
-            dispatch(getActionAdditem(savedCart))
+            dispatch(getActionAddItem(savedCart))
             showSuccessMsg('Added to cart!')
         } catch (err) {
             showErrorMsg('Cannot add item')
@@ -58,7 +58,7 @@ export function updateItem(item) {
             console.log(item)
             const saveditem = await cartService.save(item)
             console.log('updated cart:', saveditem)
-            dispatch(getActionUpdateitem(saveditem))
+            dispatch(getActionUpdateItem(saveditem))
             showSuccessMsg('Cart updated')
         } catch (error) {
             showUserMsg('cant update cart')
